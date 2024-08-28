@@ -18,6 +18,9 @@ resource "aws_ecs_task_definition" "sample" {
           containerPort = 80
         }
       ]
+      repositoryCredentials = {
+            credentialsParameter = "arn:aws:secretsmanager:ap-south-1:194722397683:secret:docker-hub-credentials-XK6dpC" 
+    }
     }
   ])
 }
