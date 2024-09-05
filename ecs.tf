@@ -5,11 +5,11 @@ resource "aws_ecs_cluster" "main" {
 
 resource "aws_launch_configuration" "ecs" {
   name_prefix   = "ecs-launch-configuration"
-  image_id       = "ami-018bf378c35021448"  
+  image_id       = "ami-03ec2424fb2711247"  
   instance_type  = "t2.medium"
   security_groups = [aws_security_group.ecs_instances.id]
   associate_public_ip_address = true
-  key_name = "mumbaikey"
+  key_name = "new-acc"
 
 iam_instance_profile = aws_iam_instance_profile.ecs_instance_profile.name
 
@@ -26,7 +26,7 @@ iam_instance_profile = aws_iam_instance_profile.ecs_instance_profile.name
 resource "aws_autoscaling_group" "ecs" {
   launch_configuration = aws_launch_configuration.ecs.id
   min_size             = 1
-  max_size             = 1
+  max_size             = 2
   desired_capacity     = 1
   vpc_zone_identifier  = [aws_subnet.public1.id,aws_subnet.public2.id]
 
