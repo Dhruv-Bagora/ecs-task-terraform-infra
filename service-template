@@ -4,23 +4,24 @@ resource "aws_ecs_task_definition" "sample" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
 
-  execution_role_arn = "arn:aws:iam::194722397683:role/execute-ecs-task"
+  execution_role_arn = "arn:aws:iam::361769592181:role/ecsTaskExecutionRole"
 
   container_definitions = jsonencode([
     {
       name      = "sample-container"
       image     = "${image_scanned}"
-      cpu       = 1
+      cpu       = 512
       memory    = 1024
       essential = true
       portMappings = [
         {
           containerPort = 80
+          hostPort = 80
         }
       ]
-      repositoryCredentials = {
-            credentialsParameter = "arn:aws:secretsmanager:ap-south-1:194722397683:secret:docker-hub-credentials-XK6dpC" 
-    }
+    #   repositoryCredentials = {
+    #         credentialsParameter = "arn:aws:secretsmanager:ap-south-1:194722397683:secret:docker-hub-credentials-XK6dpC" 
+    # }
     }
   ])
 }
@@ -37,3 +38,4 @@ resource "aws_ecs_service" "sample" {
     security_groups   = [aws_security_group.ecs_service.id]
   }
 }
+
